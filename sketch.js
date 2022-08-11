@@ -4,17 +4,22 @@ var sonicpulo, sonicleft;
 var solo;
 var robo, inimigo_anm, inimigo;
 var estado = "jogar";
+var b1
 var b2;
-
+var grupob
 function preload(){ // função que carregar todas as imagens e animações
   sonicanimation = loadAnimation ("assets/s1.png","assets/s2.png","assets/s3.png","assets/s4.png")
   sonicpulo = loadAnimation("assets/p1.png","assets/p2.png", "assets/p3.png","assets/p4.png","assets/p5.png")
   sonicleft = loadAnimation ("assets/s5.png","assets/s6.png","assets/s7.png","assets/s8.png")
   inimigo_anm = loadAnimation ("assets/i6.png","assets/i7.png","assets/i8.png","assets/i9.png","assets/i10.png","assets/i11.png","assets/i12.png","assets/i13.png")
+  b1 = loadAnimation("assets/b1.png")
   b2 = loadAnimation("assets/b2.png")
+  solo
 }
 
 function setup(){ // todas as configuraçoes dos objetos
+  grupob=new Group() 
+  
   createCanvas(windowWidth,windowHeight);
   sonic = createSprite(500,600)
   sonic.addAnimation("sonic",sonicanimation )
@@ -38,6 +43,8 @@ function draw(){
   if (estado === "jogar"){
     controle()
      inimigos()
+     blocos()
+     sonic.collide(grupob)
   }else if (estado === "encerrar"){
 
   }
@@ -58,7 +65,7 @@ function draw(){
     }
   
     sonic.velocityY += 0.8
-     if(keyDown("space") && sonic.y>(windowHeight-400)){
+     if(keyDown("space") && sonic.y>(windowHeight-1000)){
       sonic.velocityY= -10
       sonic.changeAnimation("sonicpulo", sonicpulo)
       sonic.scale = 1.2
@@ -77,5 +84,15 @@ function draw(){
     robos.addAnimation("robo", b2) 
     robos.scale = 0.5
     //robos.velocityX =-3
+    }
+  }
+
+  function blocos(){
+    if(frameCount%60===0){
+    var blocos= createSprite(sonic.x+800,sonic.y,20,20)
+    blocos.lifetime = 1000
+    blocos.addAnimation("blocos", b1) 
+    blocos.scale = 0.5
+    grupob.add(blocos)
     }
   }
