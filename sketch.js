@@ -48,6 +48,9 @@ function draw(){
      inimigos()
      blocos()
       moedas()
+      if(score>=2) {
+      estado= "encerrar" 
+      } 
      sonic.collide(grupob)
 
      text("SCORE: "+score, sonic.x+200, sonic.y-100)
@@ -60,7 +63,11 @@ function draw(){
       collected.remove()
      })
   }else if (estado === "encerrar"){
-
+   grupob.destroyEach()
+   grupocoin.destroyEach()
+   grupoin.destroyEach()
+   inimigo.velocityX = 4
+   controle()
   }
  
   camera.position.x= sonic.position.x
